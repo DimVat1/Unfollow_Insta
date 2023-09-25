@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Unfollow Extension",
+    "version": "1.0",
+    "description": "Automatically unfollow users on a website.",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "1.png",
+        "48": "2.png",
+        "128": "3.gif"
+      }
+    }
+  }
+
+  
