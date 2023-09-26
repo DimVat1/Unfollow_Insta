@@ -1,0 +1,52 @@
+let unfollowButtonText = "Following";
+let unfollowConfirmationText = "Unfollow";
+let selector = `button:contains('${unfollowButtonText}')`;
+let unfollowButtons = $(selector);
+let totalUnfollowButtons = unfollowButtons.length;
+
+const maxUnfollowsPerInterval = 100; // Set the desired rate
+const intervalDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+if (!totalUnfollowButtons) {
+    alert("Error: no Following buttons found, maybe change the text of the button?");
+}
+
+function unfollowUser(index) {
+    if (index >= totalUnfollowButtons) {
+        console.log("Script finished successfully!");
+        return;
+    }
+
+    let button = $(unfollowButtons[index]);
+
+    console.log(`Unfollowing ${index + 1} of ${totalUnfollowButtons}`);
+
+    button.trigger("click");
+
+    // Important: recently, a confirmation dialog was added when you click
+    // on unfollow, so simply click the confirmation button as well to unfollow the user
+    setTimeout(function () {
+        var btn = $(`button:contains('${unfollowConfirmationText}')`);
+
+        if (btn) {
+            btn.trigger("click");
+        }
+
+        setTimeout(function () {
+            unfollowUser(index + 1); // Continue unfollowing
+        }, 100); // Reduce this delay if needed
+    }, 100); // Reduce this delay if needed
+}
+
+// Start the unfollow loop
+unfollowUser(0);
+
+// Set up a recurring interval to pause after reaching the max unfollows
+setInterval(function () {
+    setTimeout(function () {
+        unfollowUser(0); // Restart the unfollow loop after the pause
+    }, intervalDuration);
+}, intervalDuration);
+
+// Inject Script!
+document.getElementsByTagName('head')[0].appendChild(jqueryScript);
